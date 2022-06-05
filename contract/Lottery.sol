@@ -10,11 +10,12 @@ contract Lottery {
   }
 
   modifier onlyManager() {
-    require(msg.sender == manager, "Must be the manager to call this function");
+    require(msg.sender == manager, "Must be the manager to call this function!");
+    _;
   }
 
   function enter() public payable {
-    require(msg.value > .01 ether, "You must enter at least 0.01 ether.");
+    require(msg.value > .01 ether, "You must enter at least 0.01 ether!");
     players.push(msg.sender);
   }
 
