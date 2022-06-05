@@ -9,6 +9,10 @@ contract Lottery {
     manager = msg.sender;
   }
 
+  modifier onlyManager() {
+    require(msg.sender == manager, "Must be the manager to call this function");
+  }
+
   function enter() public payable {
     require(msg.value > .01 ether, "You must enter at least 0.01 ether.");
     players.push(msg.sender);
@@ -25,5 +29,11 @@ contract Lottery {
           )
         )
       );
+  }
+
+  function pickWinner() public onlyManager() {
+    uint index = random() % players.length;
+    players[index].transfer(address(this).balance);
+    players = new address[](0);
   }
 }
